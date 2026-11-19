@@ -3,23 +3,120 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GTA VI trophy checklist</title>
+<title>Leonida Trophy Guide — GTA VI · PS5</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header>
-  <h1>GTA VI trophy checklist</h1>
-  <p id="progress">0 of 55 earned</p>
+<header class="masthead">
+  <div class="masthead-text">
+    <p class="kicker">Grand Theft Auto VI &middot; PlayStation 5 &middot; 55 trophies &middot; offline guide</p>
+    <h1>Leonida Trophy Guide</h1>
+    <p class="lede">Every trophy, with a tracker that remembers what you earned. Names, descriptions and grades are the official PlayStation list; each guide is written for this page and cites its sources. No online trophies. One playthrough is enough — about 200 hours to the platinum.</p>
+  </div>
+  <div class="progress-card" id="progressCard">
+    <p class="progress-big"><span id="earnedCount">0</span><span class="of"> / 55 earned</span></p>
+    <div class="bar" role="progressbar" aria-label="Trophies earned"><div class="bar-fill" id="barFill"></div></div>
+    <p class="progress-pct" id="progressPct">0% to the platinum</p>
+    <ul class="grade-counts">
+      <li><span class="chip platinum">Platinum</span> <span id="countPlatinum">0 / 1</span></li>
+      <li><span class="chip gold">Gold</span> <span id="countGold">0 / 2</span></li>
+      <li><span class="chip silver">Silver</span> <span id="countSilver">0 / 6</span></li>
+      <li><span class="chip bronze">Bronze</span> <span id="countBronze">0 / 46</span></li>
+    </ul>
+  </div>
 </header>
-<div class="controls">
-  <label>Grade <select id="grade"><option value="all">All</option><option value="platinum">Platinum</option><option value="gold">Gold</option><option value="silver">Silver</option><option value="bronze">Bronze</option></select></label>
-  <button id="export" type="button">Export progress</button>
-  <label class="import">Import progress <input id="import" type="file" accept="application/json"></label>
-</div>
-<table>
-  <thead><tr><th>Earned</th><th>Trophy</th><th>Grade</th><th>How to get it</th></tr></thead>
-  <tbody id="rows"></tbody>
-</table>
+
+<nav class="tabs" aria-label="Guide sections">
+  <button type="button" class="tab active" data-view="checklist">Checklist</button>
+  <button type="button" class="tab" data-view="roadmap">Roadmap to the platinum</button>
+  <button type="button" class="tab" data-view="missable">Missable watch</button>
+</nav>
+
+<section id="view-checklist" class="view">
+  <div class="toolbar">
+    <label class="search"><span class="visually-hidden">Search</span><input id="search" type="search" placeholder="Search trophies…" autocomplete="off" aria-label="Search trophies"></label>
+    <label>Grade
+      <select id="gradeFilter">
+        <option value="all">All grades</option>
+        <option value="platinum">Platinum</option>
+        <option value="gold">Gold</option>
+        <option value="silver">Silver</option>
+        <option value="bronze">Bronze</option>
+      </select>
+    </label>
+    <label>Kind
+      <select id="kindFilter">
+        <option value="all">All kinds</option>
+        <option value="story">Story</option>
+        <option value="side">Side quests</option>
+        <option value="collection">Collection</option>
+        <option value="activity">Activity</option>
+        <option value="misc">Miscellaneous</option>
+      </select>
+    </label>
+    <label class="check"><input id="missableOnly" type="checkbox"> Missable only</label>
+    <label class="check"><input id="spoilerToggle" type="checkbox" checked> Hide story spoilers</label>
+    <span class="spacer"></span>
+    <button id="exportBtn" type="button">Export progress</button>
+    <label class="import-btn">Import progress <input id="importFile" type="file" accept="application/json,.json"></label>
+    <button id="resetBtn" type="button">Reset</button>
+  </div>
+
+  <p class="hint" id="resultHint"></p>
+  <div class="missable-strip" id="missableStrip">⚠ <strong>One trophy may be missable:</strong> <button type="button" class="linklike" data-open-trophy="28">Positive Mental Attitude</button> — do Lucia&rsquo;s Chapter 1 balcony meditation before Chapter 1 ends. <button type="button" class="linklike" data-view-link="missable">See the missable watch &rarr;</button></div>
+
+  <ol class="trophy-list" id="trophyList"></ol>
+</section>
+
+<section id="view-roadmap" class="view hidden">
+  <h2>Roadmap to the platinum — <span class="nowrap">Vice Got a Price!</span></h2>
+  <p class="section-lede">Four stages, in order. Stage 1 is the story (60–80 hours); Stage 2 the side questlines; Stage 3 the post-story cleanup and collections; Stage 4 the 100% checklist and the platinum. Nothing on the checklist is missable — it can all be done in free-roam after the story. Keep a manual save at the start of every chapter: there is no mission replay and no New Game+.</p>
+  <ol class="roadmap" id="roadmapList"></ol>
+  <aside class="save-box">
+    <h3>Save discipline (read this first)</h3>
+    <ul>
+      <li>15 manual save slots + 1 autosave. Keep one save at the start and one at the end of each chapter (10 slots), and rotate the other 5 for free-roam.</li>
+      <li>Never turn on a cheat during a trophy run: cheats disable trophies and saving.</li>
+      <li>Do the Chapter 1 balcony meditation for Positive Mental Attitude before Chapter 1 ends — the only trophy that may be missable.</li>
+      <li>Scan vehicles and study animals as you go: 200 of 277 vehicles and 100 of 255 animals count toward 100%.</li>
+    </ul>
+  </aside>
+</section>
+
+<section id="view-missable" class="view hidden">
+  <h2>Missable watch</h2>
+  <p class="section-lede">At launch, exactly one trophy is reported as possibly missable. Everything else in the list is confirmed safe: story trophies unlock automatically, and every side questline stays available in free-roam after the story. The watch below is built from the official descriptions plus the launch guides.</p>
+  <div id="missableList"></div>
+  <aside class="save-box">
+    <h3>Why the rest are safe</h3>
+    <ul>
+      <li>All 12 story trophies unlock automatically when their chapter or mission ends.</li>
+      <li>Quest givers who go quiet mid-story (Kenton, for example) come back later — all trophy-related characters are available again after the story.</li>
+      <li>Optional missions that disappear do not matter for trophies: there are far more than the 100 the checklist asks for.</li>
+      <li>A few magazine collectibles sit in story buildings that later close, but they also spawn elsewhere and are not needed for any trophy.</li>
+    </ul>
+  </aside>
+</section>
+
+<aside class="detail" id="detailPanel" hidden aria-label="Trophy guide">
+  <button type="button" class="detail-close" id="detailClose" aria-label="Close guide">&times;</button>
+  <p class="detail-kicker" id="detailKicker"></p>
+  <h2 id="detailName"></h2>
+  <p class="detail-desc" id="detailDesc"></p>
+  <p class="detail-meta" id="detailMeta"></p>
+  <p class="detail-missable" id="detailMissable" hidden></p>
+  <h3>Guide</h3>
+  <p class="detail-guide" id="detailGuide"></p>
+  <h3>Sources</h3>
+  <ul class="detail-sources" id="detailSources"></ul>
+  <label class="detail-earned"><input type="checkbox" id="detailEarned"> Mark as earned</label>
+</aside>
+
+<footer>
+  <p>Names, descriptions and grades are the official PlayStation 5 trophy list (55 trophies: 1 platinum, 2 gold, 6 silver, 46 bronze; 28 hidden on PlayStation until earned). Every guide on this page is written in our own words for this guide and cites the pages it was drawn from — a source is cited, never copied. Kinds (story / side / collection / activity / miscellaneous) are derived from the official descriptions. Progress is saved in your browser (localStorage) and never leaves your device; export and import are plain JSON files. This guide works fully offline and loads nothing from the network.</p>
+  <p>Sources consulted: PowerPyx — GTA 6 Trophy Guide &amp; Roadmap; the official list as published by Exophase and cross-checked by PSNProfiles / TrueAchievements (via Planet GTA 6); Output Lag, KeenGamer, SixShore and GTA Vibes trophy lists. Launch-era detail is still settling: where a method is unconfirmed, the guide says so instead of guessing.</p>
+</footer>
+
 <script type="module" src="app.js"></script>
 </body>
 </html>
